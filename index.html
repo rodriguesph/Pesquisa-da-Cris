@@ -30,8 +30,8 @@
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .header h1 {
@@ -44,7 +44,13 @@
         .header p {
             color: #7f8c8d;
             font-size: 1.1em;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+
+        .header p.credit {
+            color: #2c3e50;
+            font-size: 0.9em;
+            font-style: italic;
         }
 
         .kpi-container {
@@ -82,27 +88,21 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 30px;
-            margin-bottom: 30px;
         }
 
         .chart-container {
             background: white;
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .chart-container:hover {
-            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
         .chart-title {
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: 600;
             color: #2c3e50;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .chart {
@@ -126,99 +126,6 @@
 
         .insight-button:hover {
             background: linear-gradient(135deg, #2980b9, #3498db);
-            transform: translateY(-2px);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideIn 0.3s ease;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            right: 20px;
-            top: 15px;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        .modal h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
-
-        .modal p {
-            line-height: 1.6;
-            margin-bottom: 15px;
-            color: #555;
-        }
-
-        .modal ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .modal li {
-            margin-bottom: 8px;
-            color: #555;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .kpi-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .modal-content {
-                margin: 10% auto;
-                width: 95%;
-                padding: 20px;
-            }
         }
     </style>
 </head>
@@ -226,485 +133,137 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>📊 Dashboard - Pesquisa Aulas Práticas</h1>
-            <p>Análise das percepções dos alunos sobre aulas práticas no modelo semipresencial</p>
-            
-            <div class="kpi-container">
-                <div class="kpi-card">
-                    <div class="kpi-value">119</div>
-                    <div class="kpi-label">Total de Respondentes</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">4.3</div>
-                    <div class="kpi-label">Avaliação Geral (1-5)</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">75.6%</div>
-                    <div class="kpi-label">Interesse em Mais Práticas</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">71.4%</div>
-                    <div class="kpi-label">Preferência pela Sede</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">60.5%</div>
-                    <div class="kpi-label">Preferem Sábado</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-value">67.2%</div>
-                    <div class="kpi-label">Aceitam até 50km</div>
-                </div>
+            <h1>📊 Dashboard - Pesquisa Aulas Práticas Semipresencial</h1>
+            <p>Uma visão detalhada das percepções dos alunos quanto às aulas práticas presenciais.</p>
+            <p class="credit">Pesquisa realizada por: Inteligência de Mercado do Integrado</p>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-container">
+            <div class="kpi-card">
+                <div class="kpi-value">119</div>
+                <div class="kpi-label">Total de Respondentes</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">47,9%</div>
+                <div class="kpi-label">Nota 5 em Qualidade</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">75,6%</div>
+                <div class="kpi-label">Interesse em Mais Práticas</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">71,4%</div>
+                <div class="kpi-label">Preferência pela Sede</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">33,6%</div>
+                <div class="kpi-label">Frequência: 1 vez/semana</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">30,3%</div>
+                <div class="kpi-label">Sábado Dia Todo</div>
             </div>
         </div>
 
-        <!-- Dashboard Grid -->
+        <!-- Gráficos -->
         <div class="dashboard-grid">
             <!-- Distribuição por Curso -->
             <div class="chart-container">
-                <div class="chart-title">📚 Distribuição por Curso</div>
-                <div id="curso-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-curso')">💡 Insights</button>
-            </div>
-
-            <!-- Preferência de Local -->
-            <div class="chart-container">
-                <div class="chart-title">📍 Preferência de Local para Práticas</div>
-                <div id="local-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-local')">💡 Insights</button>
+                <div class="chart-title">Distribuição por Curso</div>
+                <div id="chart-cursos" class="chart"></div>
             </div>
 
             <!-- Distância Máxima -->
             <div class="chart-container">
-                <div class="chart-title">🚗 Distância/Tempo Máximo Aceitável</div>
-                <div id="distancia-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-distancia')">💡 Insights</button>
+                <div class="chart-title">Distância/Tempo Máximo</div>
+                <div id="chart-distancia" class="chart"></div>
             </div>
 
             <!-- Frequência Desejada -->
             <div class="chart-container">
-                <div class="chart-title">📅 Frequência Máxima Disposta</div>
-                <div id="frequencia-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-frequencia')">💡 Insights</button>
+                <div class="chart-title">Frequência Máxima</div>
+                <div id="chart-frequencia" class="chart"></div>
             </div>
 
-            <!-- Dias Preferidos -->
+            <!-- Dias Ideais -->
             <div class="chart-container">
-                <div class="chart-title">🗓️ Dias Ideais para Práticas</div>
-                <div id="dias-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-dias')">💡 Insights</button>
+                <div class="chart-title">Dias e Períodos Ideais</div>
+                <div id="chart-dias" class="chart"></div>
             </div>
 
-            <!-- Interesse em Mais Práticas -->
+            <!-- Avaliação de Qualidade -->
             <div class="chart-container">
-                <div class="chart-title">🎯 Interesse em Práticas Adicionais</div>
-                <div id="interesse-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-interesse')">💡 Insights</button>
-            </div>
-
-            <!-- Avaliação Qualidade -->
-            <div class="chart-container">
-                <div class="chart-title">⭐ Avaliação da Qualidade Geral</div>
-                <div id="qualidade-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-qualidade')">💡 Insights</button>
+                <div class="chart-title">Avaliação de Qualidade</div>
+                <div id="chart-qualidade" class="chart"></div>
             </div>
 
             <!-- Avaliação Custo-Benefício -->
             <div class="chart-container">
-                <div class="chart-title">💰 Avaliação Custo-Benefício</div>
-                <div id="custo-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-custo')">💡 Insights</button>
-            </div>
-
-            <!-- Percepção Geral -->
-            <div class="chart-container">
-                <div class="chart-title">💭 Percepção Geral do Curso</div>
-                <div id="percepcao-chart" class="chart"></div>
-                <button class="insight-button" onclick="openModal('modal-percepcao')">💡 Insights</button>
+                <div class="chart-title">Avaliação de Custo-Benefício</div>
+                <div id="chart-custo-beneficio" class="chart"></div>
             </div>
         </div>
     </div>
 
-    <!-- Modais de Insights -->
-    <!-- Modal Curso -->
-    <div id="modal-curso" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Distribuição por Curso</h3>
-            <p><strong>Concentração em Cursos Específicos:</strong> A pesquisa revela alta concentração em Agronomia (27,7%) e Farmácia (23,5%), representando mais de 50% da amostra.</p>
-            <p><strong>Perfil dos Respondentes:</strong> Os alunos de TADS foram excluídos por não possuírem aulas práticas presenciais, garantindo que os dados reflitam apenas cursos que demandam atividades práticas.</p>
-            <p><strong>Implicação Estratégica:</strong> A concentração indica que esses cursos são prioritários para investimentos em infraestrutura prática e podem servir como modelo para outros cursos.</p>
-        </div>
-    </div>
-
-    <!-- Modal Local -->
-    <div id="modal-local" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Preferência de Local</h3>
-            <p><strong>Alta Aceitação da Centralização:</strong> 71,4% dos alunos preferem a sede em Campo Mourão, demonstrando que o deslocamento não é um obstáculo significativo para os alunos atuais.</p>
-            <p><strong>Baixa Demanda por Polos Locais:</strong> Apenas 10,9% preferem o polo local, questionando a necessidade de investimento em múltiplos polos com laboratórios.</p>
-            <p><strong>Alerta Estratégico:</strong> Essa percepção pode ser diferente para prospects de regiões mais afastadas, onde a distância pode se tornar um fator decisivo na captação.</p>
-        </div>
-    </div>
-
-    <!-- Modal Distância -->
-    <div id="modal-distancia" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Distância e Tempo</h3>
-            <p><strong>Limite de 50km como Referência:</strong> 67,2% dos alunos aceitam se deslocar até 50km (40 minutos), estabelecendo um raio geográfico claro para a captação.</p>
-            <p><strong>Concentração Local:</strong> 37% aceitam apenas até 30km, indicando forte preferência por proximidade.</p>
-            <p><strong>Reflexão Estratégica:</strong> Vale questionar se investir na expansão para atender o público além dos 51km justifica-se, considerando que os próprios alunos atuais indicam esse limite.</p>
-        </div>
-    </div>
-
-    <!-- Modal Frequência -->
-    <div id="modal-frequencia" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Frequência das Práticas</h3>
-            <p><strong>Dois Perfis Distintos:</strong> 62,2% dos alunos aceitam encontros semanais ou mais frequentes, demonstrando interesse em intensificar a vivência prática.</p>
-            <p><strong>Demanda por Flexibilidade:</strong> 38% preferem frequência quinzenal ou mensal, buscando maior flexibilidade no cronograma.</p>
-            <p><strong>Oportunidade:</strong> A alta aceitação de frequência semanal (43,7%) indica potencial para ofertar mais práticas regulares, atendendo à demanda dos alunos mais engajados.</p>
-        </div>
-    </div>
-
-    <!-- Modal Dias -->
-    <div id="modal-dias" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Dias e Períodos</h3>
-            <p><strong>Domínio do Sábado:</strong> 60,5% dos alunos preferem sábado, especialmente pela manhã, refletindo o perfil de estudantes que conciliam trabalho durante a semana.</p>
-            <p><strong>Flexibilidade de Período:</strong> A distribuição entre manhã, tarde e integral no sábado oferece oportunidades para diferentes formatos de oferta.</p>
-            <p><strong>Estratégia de Concentração:</strong> Concentrar as práticas aos sábados poderia maximizar a adesão e otimizar o uso da infraestrutura.</p>
-        </div>
-    </div>
-
-    <!-- Modal Interesse -->
-    <div id="modal-interesse" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Interesse em Mais Práticas</h3>
-            <p><strong>Demanda Reprimida Significativa:</strong> 75,6% afirmam que participariam "com certeza" de mais práticas, evidenciando alta valorização das atividades práticas.</p>
-            <p><strong>Potencial de Expansão:</strong> Apenas 11,8% não têm interesse, mostrando amplo espaço para ampliar a oferta de práticas.</p>
-            <p><strong>Diferencial Competitivo:</strong> As práticas são percebidas como componente essencial da formação, podendo ser um forte diferencial na captação.</p>
-            <p><strong>Alerta:</strong> É importante validar se essa valorização se mantém entre prospects que ainda não vivenciaram o curso.</p>
-        </div>
-    </div>
-
-    <!-- Modal Qualidade -->
-    <div id="modal-qualidade" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Qualidade Geral</h3>
-            <p><strong>Alta Satisfação:</strong> Média de 4,3/5 com 82,4% dos alunos atribuindo notas 4 ou 5, refletindo satisfação geral com a entrega acadêmica.</p>
-            <p><strong>Espaço para Melhorias:</strong> 14,3% atribuíram nota 3 (neutra), sinalizando oportunidades de aprimoramento na estrutura ou organização.</p>
-            <p><strong>Benchmarking Interno:</strong> A alta avaliação serve como referência para manter e replicar as boas práticas identificadas.</p>
-        </div>
-    </div>
-
-    <!-- Modal Custo -->
-    <div id="modal-custo" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Custo-Benefício</h3>
-            <p><strong>Percepção Positiva de Valor:</strong> Média de 4,1/5 com 78,2% avaliando com notas 4 ou 5, indicando que o valor pago é percebido como compatível com a entrega.</p>
-            <p><strong>Oportunidade de Valorização:</strong> Há margem para aumentar o valor percebido sem alterar preços, focando no reforço e comunicação da qualidade das práticas.</p>
-            <p><strong>Diferencial Competitivo:</strong> A boa percepção custo-benefício pode ser explorada como vantagem competitiva no mercado educacional.</p>
-        </div>
-    </div>
-
-    <!-- Modal Percepção -->
-    <div id="modal-percepcao" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>💡 Insights - Percepção Geral</h3>
-            <p><strong>Demanda Clara por Mais Práticas:</strong> 42,9% afirmam que o curso tem boa qualidade, mas poderia ofertar mais aulas práticas - a principal demanda identificada.</p>
-            <p><strong>Satisfação Equilibrada:</strong> 24,4% consideram que o curso atende plenamente às expectativas, indicando um patamar sólido de qualidade.</p>
-            <p><strong>Valorização da Flexibilidade:</strong> 16% destacam a flexibilidade como diferencial, reforçando a importância de manter esse atributo do modelo semipresencial.</p>
-            <p><strong>Oportunidade Principal:</strong> A convergência dos dados aponta para ampliar as práticas presenciais mantendo a flexibilidade como diferencial.</p>
-        </div>
-    </div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <script>
-        // Dados corrigidos baseados integralmente na pesquisa
-        const dados = {
+        // Dados atualizados com os números fornecidos
+        const data = {
             cursos: {
-                labels: ['Agronomia', 'Farmácia', 'Fisioterapia', 'Medicina Veterinária', 'Biomedicina', 'Enfermagem', 'Nutrição'],
-                values: [33, 28, 19, 12, 11, 9, 7],
-                percentuais: [27.7, 23.5, 16.0, 10.1, 9.2, 7.6, 5.9]
-            },
-            local: {
-                labels: ['Sede Campo Mourão', 'Polo Local', 'Indiferente'],
-                values: [85, 13, 21],
-                percentuais: [71.4, 10.9, 17.6]
+                labels: ['Agronomia', 'Farmácia', 'Fisioterapia', 'Biomedicina', 'Educação Física', 'Nutrição', 'Estética'],
+                values: [27, 23.5, 16, 11.8, 7.6, 7.6, 5.9]
             },
             distancia: {
-                labels: ['Até 30km (20min)', '31-50km (21-40min)', '51-70km (41-60min)', '71-100km (61-90min)', 'Mais de 100km (90min+)'],
-                values: [44, 36, 25, 9, 5],
-                percentuais: [37.0, 30.3, 21.0, 7.6, 4.2]
+                labels: ['Até 20km', '21-50km', '51-100km', '101-150km', 'Mais de 150km'],
+                values: [37.8, 29.4, 24.4, 5.9, 2.5]
             },
             frequencia: {
-                labels: ['Uma vez por semana', 'Duas vezes por semana', 'Uma vez a cada 15 dias', 'Uma vez por mês', 'Menos de uma vez por mês'],
-                values: [52, 22, 25, 15, 5],
-                percentuais: [43.7, 18.5, 21.0, 12.6, 4.2]
+                labels: ['1 vez/semana', 'Mais de 1 vez/semana', '1 vez/mês', '1 vez/módulo'],
+                values: [33.6, 28.6, 26.1, 11.8]
             },
             dias: {
-                labels: ['Sábado', 'Outros dias'],
-                values: [72, 47],
-                percentuais: [60.5, 39.5]
-            },
-            interesse: {
-                labels: ['Com certeza', 'Talvez', 'Não'],
-                values: [90, 15, 14],
-                percentuais: [75.6, 12.6, 11.8]
+                labels: [
+                    'Sábado (dia todo)',
+                    'Sábado (manhã)',
+                    'Terça/quinta (noite)',
+                    'Sábado (tarde)',
+                    'Segunda/quarta (noite)',
+                    'Quarta (noite)',
+                    'Sexta (noite)',
+                    'Quinta (noite)',
+                    'Segunda (noite)',
+                    'Terça (noite)'
+                ],
+                values: [30.3, 30.3, 11.8, 8.4, 7.6, 5, 3.4, 1.7, 1.7, 0]
             },
             qualidade: {
-                labels: ['Nota 1', 'Nota 2', 'Nota 3', 'Nota 4', 'Nota 5'],
-                values: [2, 5, 17, 52, 43],
-                percentuais: [1.7, 4.2, 14.3, 43.7, 36.1],
-                media: 4.3
+                labels: ['Nota 5', 'Nota 4', 'Nota 3', 'Nota 2', 'Nota 1'],
+                values: [47.9, 34.5, 14.3, 1.7, 1.7]
             },
-            custo: {
-                labels: ['Nota 1', 'Nota 2', 'Nota 3', 'Nota 4', 'Nota 5'],
-                values: [3, 8, 15, 48, 45],
-                percentuais: [2.5, 6.7, 12.6, 40.3, 37.8],
-                media: 4.1
-            },
-            percepcao: {
-                labels: ['Boa qualidade, mas poderia ter mais práticas', 'Atende plenamente às expectativas', 'A flexibilidade é o diferencial', 'Poderia ser mais desafiador', 'Poderia ser mais organizado', 'Outros'],
-                values: [51, 29, 19, 10, 6, 4],
-                percentuais: [42.9, 24.4, 16.0, 8.4, 5.0, 3.4]
+            custoBeneficio: {
+                labels: ['Nota 5', 'Nota 4', 'Nota 3', 'Nota 2', 'Nota 1'],
+                values: [42.9, 35.3, 16, 2.5, 3.4]
             }
         };
 
-        function createCursoChart() {
-            const data = [{
-                type: 'pie',
-                labels: dados.cursos.labels,
-                values: dados.cursos.values,
-                textinfo: 'label+percent',
-                textposition: 'auto',
-                marker: {
-                    colors: ['#3498db', '#e74c3c', '#f39c12', '#27ae60', '#9b59b6', '#1abc9c', '#e67e22']
-                },
-                hole: 0.3
-            }];
-
-            const layout = {
-                showlegend: true,
-                margin: { t: 20, b: 20, l: 20, r: 20 },
-                font: { size: 11 }
-            };
-
-            Plotly.newPlot('curso-chart', data, layout, {responsive: true});
+        // Funções para criar os gráficos
+        function createChart(id, labels, values, type = 'pie', extra = {}) {
+            const layout = { margin: { t: 20, b: 50 } };
+            const data = [{ ...extra, labels, values, type }];
+            Plotly.newPlot(id, data, layout, { responsive: true });
         }
 
-        function createLocalChart() {
-            const data = [{
-                type: 'bar',
-                x: dados.local.labels,
-                y: dados.local.values,
-                text: dados.local.percentuais.map(p => p + '%'),
-                textposition: 'auto',
-                marker: {
-                    color: ['#3498db', '#e74c3c', '#95a5a6']
-                }
-            }];
-
-            const layout = {
-                xaxis: { title: 'Local de Preferência' },
-                yaxis: { title: 'Número de Alunos' },
-                margin: { t: 20, b: 80, l: 50, r: 20 }
-            };
-
-            Plotly.newPlot('local-chart', data, layout, {responsive: true});
-        }
-
-        function createDistanciaChart() {
-            const data = [{
-                type: 'bar',
-                x: dados.distancia.labels,
-                y: dados.distancia.values,
-                text: dados.distancia.percentuais.map(p => p + '%'),
-                textposition: 'auto',
-                marker: {
-                    color: ['#27ae60', '#2ecc71', '#f39c12', '#e67e22', '#e74c3c']
-                }
-            }];
-
-            const layout = {
-                xaxis: { title: 'Distância/Tempo' },
-                yaxis: { title: 'Número de Alunos' },
-                margin: { t: 20, b: 100, l: 50, r: 20 }
-            };
-
-            Plotly.newPlot('distancia-chart', data, layout, {responsive: true});
-        }
-
-        function createFrequenciaChart() {
-            const data = [{
-                type: 'bar',
-                x: dados.frequencia.labels,
-                y: dados.frequencia.values,
-                text: dados.frequencia.percentuais.map(p => p + '%'),
-                textposition: 'auto',
-                marker: {
-                    color: ['#2ecc71', '#27ae60', '#3498db', '#f39c12', '#e74c3c']
-                }
-            }];
-
-            const layout = {
-                xaxis: { title: 'Frequência Desejada' },
-                yaxis: { title: 'Número de Alunos' },
-                margin: { t: 20, b: 120, l: 50, r: 20 }
-            };
-
-            Plotly.newPlot('frequencia-chart', data, layout, {responsive: true});
-        }
-
-        function createDiasChart() {
-            const data = [{
-                type: 'pie',
-                labels: dados.dias.labels,
-                values: dados.dias.values,
-                textinfo: 'label+percent',
-                marker: {
-                    colors: ['#9b59b6', '#3498db']
-                },
-                hole: 0.4
-            }];
-
-            const layout = {
-                showlegend: true,
-                margin: { t: 20, b: 20, l: 20, r: 20 }
-            };
-
-            Plotly.newPlot('dias-chart', data, layout, {responsive: true});
-        }
-
-        function createInteresseChart() {
-            const data = [{
-                type: 'pie',
-                labels: dados.interesse.labels,
-                values: dados.interesse.values,
-                textinfo: 'label+percent',
-                marker: {
-                    colors: ['#27ae60', '#f39c12', '#e74c3c']
-                },
-                hole: 0.3
-            }];
-
-            const layout = {
-                showlegend: true,
-                margin: { t: 20, b: 20, l: 20, r: 20 }
-            };
-
-            Plotly.newPlot('interesse-chart', data, layout, {responsive: true});
-        }
-
-        function createQualidadeChart() {
-            const data = [{
-                type: 'bar',
-                x: dados.qualidade.labels,
-                y: dados.qualidade.values,
-                text: dados.qualidade.percentuais.map(p => p + '%'),
-                textposition: 'auto',
-                marker: {
-                    color: ['#e74c3c', '#e67e22', '#f39c12', '#27ae60', '#2ecc71']
-                }
-            }];
-
-            const layout = {
-                title: `Média: ${dados.qualidade.media}/5`,
-                xaxis: { title: 'Avaliação' },
-                yaxis: { title: 'Número de Alunos' },
-                margin: { t: 50, b: 80, l: 50, r: 20 }
-            };
-
-            Plotly.newPlot('qualidade-chart', data, layout, {responsive: true});
-        }
-
-        function createCustoChart() {
-            const data = [{
-                type: 'bar',
-                x: dados.custo.labels,
-                y: dados.custo.values,
-                text: dados.custo.percentuais.map(p => p + '%'),
-                textposition: 'auto',
-                marker: {
-                    color: ['#e74c3c', '#e67e22', '#f39c12', '#27ae60', '#2ecc71']
-                }
-            }];
-
-            const layout = {
-                title: `Média: ${dados.custo.media}/5`,
-                xaxis: { title: 'Avaliação' },
-                yaxis: { title: 'Número de Alunos' },
-                margin: { t: 50, b: 80, l: 50, r: 20 }
-            };
-
-            Plotly.newPlot('custo-chart', data, layout, {responsive: true});
-        }
-
-        function createPercepcaoChart() {
-            const data = [{
-                type: 'bar',
-                x: dados.percepcao.labels,
-                y: dados.percepcao.values,
-                text: dados.percepcao.percentuais.map(p => p + '%'),
-                textposition: 'auto',
-                marker: {
-                    color: ['#e74c3c', '#27ae60', '#3498db', '#f39c12', '#e67e22', '#95a5a6']
-                }
-            }];
-
-            const layout = {
-                xaxis: { title: 'Percepção do Curso' },
-                yaxis: { title: 'Número de Alunos' },
-                margin: { t: 20, b: 150, l: 50, r: 20 }
-            };
-
-            Plotly.newPlot('percepcao-chart', data, layout, {responsive: true});
-        }
-
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // Event listeners para fechar modais
-        document.addEventListener('DOMContentLoaded', function() {
-            // Criar todos os gráficos
-            createCursoChart();
-            createLocalChart();
-            createDistanciaChart();
-            createFrequenciaChart();
-            createDiasChart();
-            createInteresseChart();
-            createQualidadeChart();
-            createCustoChart();
-            createPercepcaoChart();
-
-            // Event listeners para fechar modais
-            document.querySelectorAll('.close').forEach(closeBtn => {
-                closeBtn.addEventListener('click', function() {
-                    this.closest('.modal').style.display = 'none';
-                });
-            });
-
-            // Fechar modal clicando fora
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        this.style.display = 'none';
-                    }
-                });
-            });
-        });
+        // Renderizar os gráficos
+        window.onload = function() {
+            createChart('chart-cursos', data.cursos.labels, data.cursos.values, 'pie', { textinfo: 'label+percent', hole: 0.3 });
+            createChart('chart-distancia', data.distancia.labels, data.distancia.values, 'bar');
+            createChart('chart-frequencia', data.frequencia.labels, data.frequencia.values, 'bar');
+            createChart('chart-dias', data.dias.labels, data.dias.values, 'pie', { textinfo: 'label+percent', hole: 0.4 });
+            createChart('chart-qualidade', data.qualidade.labels, data.qualidade.values, 'bar');
+            createChart('chart-custo-beneficio', data.custoBeneficio.labels, data.custoBeneficio.values, 'bar');
+        };
     </script>
 </body>
 </html>
