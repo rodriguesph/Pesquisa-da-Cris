@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pesquisa Aulas Práticas Semipresencial</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .kpi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kpi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .kpi-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .filters {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .filter-group select {
+            padding: 10px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 1em;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-2px);
+        }
+
+        .chart-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart {
+            width: 100%;
+            height: 400px;
+        }
+
+        .insights-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .insight-card {
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+            background: #f8f9fa;
+        }
+
+        .insight-card.warning {
+            border-left-color: #f39c12;
+        }
+
+        .insight-card.success {
+            border-left-color: #27ae60;
+        }
+
+        .insight-card.info {
+            border-left-color: #9b59b6;
+        }
+
+        .insight-icon {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .insight-text {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .kpi-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 Dashboard - Pesquisa Aulas Práticas</h1>
+            <p>Análise das percepções dos alunos sobre aulas práticas no modelo semipresencial</p>
+            
+            <div class="kpi-container">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="total-respondentes">119</div>
+                    <div class="kpi-label">Total de Respondentes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="avaliacao-geral">4.3</div>
+                    <div class="kpi-label">Avaliação Geral (1-5)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="interesse-praticas">75.6%</div>
+                    <div class="kpi-label">Interesse em Mais Práticas</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="preferencia-sede">71.4%</div>
+                    <div class="kpi-label">Preferência pela Sede</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="curso-filter">🎓 Filtrar por Curso:</label>
+                <select id="curso-filter" onchange="updateDashboard()">
+                    <option value="todos">Todos os Cursos</option>
+                    <option value="agronomia">Agronomia</option>
+                    <option value="farmacia">Farmácia</option>
+                    <option value="fisioterapia">Fisioterapia</option>
+                    <option value="outros">Outros Cursos</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Distribuição por Curso -->
+            <div class="chart-container">
+                <div class="chart-title">📚 Distribuição por Curso</div>
+                <div id="curso-chart" class="chart"></div>
+            </div>
+
+            <!-- Preferência de Local -->
+            <div class="chart-container">
+                <div class="chart-title">📍 Preferência de Local para Práticas</div>
+                <div id="local-chart" class="chart"></div>
+            </div>
+
+            <!-- Distância Máxima -->
+            <div class="chart-container">
+                <div class="chart-title">🚗 Distância Máxima Aceitável</div>
+                <div id="distancia-chart" class="chart"></div>
+            </div>
+
+            <!-- Frequência Desejada -->
+            <div class="chart-container">
+                <div class="chart-title">📅 Frequência Máxima Desejada</div>
+                <div id="frequencia-chart" class="chart"></div>
+            </div>
+
+            <!-- Dias Preferidos -->
+            <div class="chart-container">
+                <div class="chart-title">🗓️ Dias e Períodos Preferidos</div>
+                <div id="dias-chart" class="chart"></div>
+            </div>
+
+            <!-- Interesse em Mais Práticas -->
+            <div class="chart-container">
+                <div class="chart-title">🎯 Interesse em Práticas Adicionais</div>
+                <div id="interesse-chart" class="chart"></div>
+            </div>
+
+            <!-- Avaliações -->
+            <div class="chart-container">
+                <div class="chart-title">⭐ Avaliações de Qualidade</div>
+                <div id="avaliacoes-chart" class="chart"></div>
+            </div>
+
+            <!-- Percepção Geral -->
+            <div class="chart-container">
+                <div class="chart-title">💭 Percepção Geral do Curso</div>
+                <div id="percepcao-chart" class="chart"></div>
+            </div>
+        </div>
+
+        <!-- Insights Section -->
+        <div class="insights-section">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">🔍 Principais Insights</h2>
+            <div class="insights-grid">
+                <div class="insight-card warning">
+                    <div class="insight-icon">⚠️</div>
+                    <div class="insight-text">Dados refletem percepção de alunos atuais, não prospects</div>
+                </div>
+                <div class="insight-card success">
+                    <div class="insight-icon">📍</div>
+                    <div class="insight-text">67% dos alunos aceitam deslocamento de até 50km</div>
+                </div>
+                <div class="insight-card info">
+                    <div class="insight-icon">📅</div>
+                    <div class="insight-text">Sábado é o dia preferido por 60,6% dos alunos</div>
+                </div>
+                <div class="insight-card success">
+                    <div class="insight-icon">📈</div>
+                    <div class="insight-text">Alta demanda por mais práticas: 75,6% têm interesse</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados da pesquisa
+        const dadosCompletos = {
+            cursos: {
+                labels: ['Agronomia', 'Farmácia', 'Fisioterapia', 'Outros'],
+                values: [33, 28, 19, 39],
+                percentuais: [27.7, 23.5, 16.0, 32.8]
+            },
+            local: {
+                labels: ['Sede Campo Mourão', 'Polo Local', 'Indiferente'],
+                values: [85, 13, 21],
+                percentuais: [71.4, 10.9, 17.6]
+            },
+            distancia: {
+                labels: ['Até 50km', 'Mais de 50km'],
+                values: [80, 39],
+                percentuais: [67.2, 32.8]
+            },
+            frequencia: {
+                labels: ['Semanal ou mais', 'Quinzenal', 'Mensal', 'Menos que mensal'],
+                values: [74, 25, 15, 5],
+                percentuais: [62.2, 21.0, 12.6, 4.2]
+            },
+            dias: {
+                labels: ['Sábado Manhã', 'Sábado Integral', 'Sábado Tarde', 'Outros dias'],
+                values: [45, 27, 10, 37],
+                percentuais: [37.8, 22.7, 8.4, 31.1]
+            },
+            interesse: {
+                labels: ['Com certeza', 'Talvez', 'Não'],
+                values: [90, 15, 14],
+                percentuais: [75.6, 12.6, 11.8]
+            },
+            avaliacoes: {
+                qualidade: { media: 4.3, distribuicao: [2, 5, 17, 52, 43] },
+                custobeneficio: { media: 4.1, distribuicao: [3, 8, 15, 48, 45] }
+            },
+            percepcao: {
+                labels: ['Boa qualidade, mas poderia ter mais práticas', 'Atende plenamente', 'Flexibilidade é o diferencial', 'Outros'],
+                values: [51, 29, 19, 20],
+                percentuais: [42.9, 24.4, 16.0, 16.8]
+            }
+        };
+
+        // Dados específicos por curso (simulados baseados na pesquisa)
+        const dadosPorCurso = {
+            agronomia: {
+                total: 33,
+                local: [25, 3, 5],
+                distancia: [22, 11],
+                frequencia: [21, 7, 4, 1],
+                interesse: [26, 4, 3]
+            },
+            farmacia: {
+                total: 28,
+                local: [20, 3, 5],
+                distancia: [19, 9],
+                frequencia: [18, 6, 3, 1],
+                interesse: [22, 3, 3]
+            },
+            fisioterapia: {
+                total: 19,
+                local: [14, 2, 3],
+                distancia: [13, 6],
+                frequencia: [12, 4, 2, 1],
+                interesse: [15, 2, 2]
+            },
+            outros: {
+                total: 39,
+                local: [26, 5, 8],
+                distancia: [26, 13],
+                frequencia: [23, 8, 6, 2],
+                interesse: [27, 6, 6]
+            }
+        };
+
+        function createCursoChart(dados) {
+            const data = [{
+                type: 'pie',
+                labels: dados.labels,
+                values: dados.values,
+                textinfo: 'label+percent',
+                textposition: 'auto',
+                marker: {
+                    colors: ['#3498db', '#e74c3c', '#f39c12', '#27ae60']
+                },
+                hole: 0.3
+            }];
+
+            const layout = {
+                showlegend: true,
+                margin: { t: 20, b: 20, l: 20, r: 20 },
+                font: { size: 12 }
+            };
+
+            Plotly.newPlot('curso-chart', data, layout, {responsive: true});
+        }
+
+        function createLocalChart(dados) {
+            const data = [{
+                type: 'bar',
+                x: dados.labels,
+                y: dados.values,
+                text: dados.percentuais.map(p => p + '%'),
+                textposition: 'auto',
+                marker: {
+                    color: ['#3498db', '#e74c3c', '#95a5a6']
+                }
+            }];
+
+            const layout = {
+                title: '',
+                xaxis: { title: 'Local' },
+                yaxis: { title: 'Número de Alunos' },
+                margin: { t: 20, b: 80, l: 50, r: 20 }
+            };
+
+            Plotly.newPlot('local-chart', data, layout, {responsive: true});
+        }
+
+        function createDistanciaChart(dados) {
+            const data = [{
+                type: 'pie',
+                labels: dados.labels,
+                values: dados.values,
+                textinfo: 'label+percent',
+                marker: {
+                    colors: ['#27ae60', '#e74c3c']
+                },
+                hole: 0.4
+            }];
+
+            const layout = {
+                showlegend: true,
+                margin: { t: 20, b: 20, l: 20, r: 20 }
+            };
+
+            Plotly.newPlot('distancia-chart', data, layout, {responsive: true});
+        }
+
+        function createFrequenciaChart(dados) {
+            const data = [{
+                type: 'bar',
+                x: dados.labels,
+                y: dados.values,
+                text: dados.percentuais.map(p => p + '%'),
+                textposition: 'auto',
+                marker: {
+                    color: ['#2ecc71', '#3498db', '#f39c12', '#e74c3c']
+                }
+            }];
+
+            const layout = {
+                xaxis: { title: 'Frequência' },
+                yaxis: { title: 'Número de Alunos' },
+                margin: { t: 20, b: 100, l: 50, r: 20 }
+            };
+
+            Plotly.newPlot('frequencia-chart', data, layout, {responsive: true});
+        }
+
+        function createDiasChart(dados) {
+            const data = [{
+                type: 'bar',
+                x: dados.labels,
+                y: dados.values,
+                text: dados.percentuais.map(p => p + '%'),
+                textposition: 'auto',
+                marker: {
+                    color: ['#9b59b6', '#8e44ad', '#674ea7', '#5b2c87']
+                }
+            }];
+
+            const layout = {
+                xaxis: { title: 'Dias e Períodos' },
+                yaxis: { title: 'Número de Alunos' },
+                margin: { t: 20, b: 100, l: 50, r: 20 }
+            };
+
+            Plotly.newPlot('dias-chart', data, layout, {responsive: true});
+        }
+
+        function createInteresseChart(dados) {
+            const data = [{
+                type: 'pie',
+                labels: dados.labels,
+                values: dados.values,
+                textinfo: 'label+percent',
+                marker: {
+                    colors: ['#27ae60', '#f39c12', '#e74c3c']
+                },
+                hole: 0.3
+            }];
+
+            const layout = {
+                showlegend: true,
+                margin: { t: 20, b: 20, l: 20, r: 20 }
+            };
+
+            Plotly.newPlot('interesse-chart', data, layout, {responsive: true});
+        }
+
+        function createAvaliacoesChart(dados) {
+            const data = [
+                {
+                    x: ['Qualidade Geral', 'Custo-Benefício'],
+                    y: [dados.qualidade.media, dados.custobeneficio.media],
+                    type: 'bar',
+                    text: [dados.qualidade.media.toFixed(1), dados.custobeneficio.media.toFixed(1)],
+                    textposition: 'auto',
+                    marker: {
+                        color: ['#3498db', '#27ae60']
+                    }
+                }
+            ];
+
+            const layout = {
+                yaxis: { title: 'Média (1-5)', range: [0, 5] },
+                margin: { t: 20, b: 80, l: 50, r: 20 }
+            };
+
+            Plotly.newPlot('avaliacoes-chart', data, layout, {responsive: true});
+        }
+
+        function createPercepcaoChart(dados) {
+            const data = [{
+                type: 'bar',
+                x: dados.labels,
+                y: dados.values,
+                text: dados.percentuais.map(p => p + '%'),
+                textposition: 'auto',
+                marker: {
+                    color: ['#e74c3c', '#27ae60', '#3498db', '#95a5a6']
+                }
+            }];
+
+            const layout = {
+                xaxis: { title: 'Percepção' },
+                yaxis: { title: 'Número de Alunos' },
+                margin: { t: 20, b: 120, l: 50, r: 20 }
+            };
+
+            Plotly.newPlot('percepcao-chart', data, layout, {responsive: true});
+        }
+
+        function updateKPIs(cursoSelecionado) {
+            if (cursoSelecionado === 'todos') {
+                document.getElementById('total-respondentes').textContent = '119';
+                document.getElementById('avaliacao-geral').textContent = '4.3';
+                document.getElementById('interesse-praticas').textContent = '75.6%';
+                document.getElementById('preferencia-sede').textContent = '71.4%';
+            } else {
+                const dadosCurso = dadosPorCurso[cursoSelecionado];
+                const interessePerc = ((dadosCurso.interesse[0] / dadosCurso.total) * 100).toFixed(1);
+                const sedePerc = ((dadosCurso.local[0] / dadosCurso.total) * 100).toFixed(1);
+                
+                document.getElementById('total-respondentes').textContent = dadosCurso.total;
+                document.getElementById('avaliacao-geral').textContent = '4.2'; // Simulado
+                document.getElementById('interesse-praticas').textContent = interessePerc + '%';
+                document.getElementById('preferencia-sede').textContent = sedePerc + '%';
+            }
+        }
+
+        function updateDashboard() {
+            const cursoSelecionado = document.getElementById('curso-filter').value;
+            
+            updateKPIs(cursoSelecionado);
+
+            if (cursoSelecionado === 'todos') {
+                // Mostrar dados completos
+                createCursoChart(dadosCompletos.cursos);
+                createLocalChart(dadosCompletos.local);
+                createDistanciaChart(dadosCompletos.distancia);
+                createFrequenciaChart(dadosCompletos.frequencia);
+                createDiasChart(dadosCompletos.dias);
+                createInteresseChart(dadosCompletos.interesse);
+                createAvaliacoesChart(dadosCompletos.avaliacoes);
+                createPercepcaoChart(dadosCompletos.percepcao);
+            } else {
+                // Filtrar dados por curso
+                const dadosCurso = dadosPorCurso[cursoSelecionado];
+                
+                // Atualizar gráficos com dados filtrados
+                createLocalChart({
+                    labels: dadosCompletos.local.labels,
+                    values: dadosCurso.local,
+                    percentuais: dadosCurso.local.map(v => ((v / dadosCurso.total) * 100).toFixed(1))
+                });
+                
+                createDistanciaChart({
+                    labels: dadosCompletos.distancia.labels,
+                    values: dadosCurso.distancia,
+                    percentuais: dadosCurso.distancia.map(v => ((v / dadosCurso.total) * 100).toFixed(1))
+                });
+                
+                createFrequenciaChart({
+                    labels: dadosCompletos.frequencia.labels,
+                    values: dadosCurso.frequencia,
+                    percentuais: dadosCurso.frequencia.map(v => ((v / dadosCurso.total) * 100).toFixed(1))
+                });
+                
+                createInteresseChart({
+                    labels: dadosCompletos.interesse.labels,
+                    values: dadosCurso.interesse,
+                    percentuais: dadosCurso.interesse.map(v => ((v / dadosCurso.total) * 100).toFixed(1))
+                });
+
+                // Manter gráficos gerais
+                createCursoChart(dadosCompletos.cursos);
+                createDiasChart(dadosCompletos.dias);
+                createAvaliacoesChart(dadosCompletos.avaliacoes);
+                createPercepcaoChart(dadosCompletos.percepcao);
+            }
+        }
+
+        // Inicializar dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDashboard();
+        });
+    </script>
+</body>
+</html>
